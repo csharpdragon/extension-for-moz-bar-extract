@@ -2,34 +2,34 @@ var textArray=[];
 var receivePDAFromPageArray=[];
 var result=[];
 var currentTabIndex=0;
-var countryurl="http://google.com";
+var countryurl="http://google.com/search?q=";
 
-var beforeNewSearch=2000;
-var before10keywords=6000;
-var beforescriping=2000;
+var beforeNewSearch=[2000,3000];
+var before10keywords=[5000,6000];
+var beforescriping=[2000,4000];
 
 function setTimerAndUrl(values){
-  if(isNullorEmpty(values["country-search-url"]))
+  if(!isNullorEmpty(values["country-search-url"]))
      countryurl=values["country-search-url"];
-  else countryurl="http://google.com";
+  else countryurl="http://google.com/search?q=";
 
-  if(isNullorEmpty(values["before start new search"]))
+  if(!isNullorEmpty(values["before start new search"]))
   {
-    beforeNewSearch=Number(values["before start new search"]);
+    beforeNewSearch=values["before start new search"];
   }
-  else{ beforeNewSearch = 2000; }
+  else{ beforeNewSearch = [2000,3000]; }
 
-  if(isNullorEmpty(values["between 10 keywords"]))
+  if(!isNullorEmpty(values["between 10 keywords"]))
   {
-    before10keywords=Number(values["between 10 keywords"]) ;
+    before10keywords=values["between 10 keywords"] ;
   }
-  else{ before10keywords= 6000; }
+  else{ before10keywords= [5000,6000]; }
 
-  if(isNullorEmpty(values["before scraping the result"]))
+  if(!isNullorEmpty(values["before scraping the result"]))
   {
-    beforescriping=Number(values["before scraping the result"]);
+    beforescriping=values["before scraping the result"];
   }
-  else{ beforescriping= 2000; }
+  else{ beforescriping= [2000,4000]; }
 
   console.log(values);
   
@@ -58,7 +58,7 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
     {
       receivePDAFromPageArray.push(request.data);
       currentTabIndex++;
-      sendResponse({wait: currentTabIndex%10==9 ,url: countryurl+'/search?q='+textArray[currentTabIndex]});
+      sendResponse({wait: currentTabIndex%10==9 ,url: countryurl+textArray[currentTabIndex]});
     }else{
       
     }

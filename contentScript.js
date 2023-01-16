@@ -1,13 +1,12 @@
 var array=[];
-var beforeNewSearch = 0;
-var before10keywords = 0;
-var beforescriping = 0;
+var beforeNewSearch =[];
+var before10keywords = [];
+var beforescriping = [];
 
 async function getTimeData(){
     await (new Promise((resolve, reject) => {
         try {
           chrome.runtime.sendMessage({type: "timer"}, async (response) => {
-            console.log(response);
             beforeNewSearch = response.beforeNewSearch;
             before10keywords = response.before10keywords;
             beforescriping = response.beforescriping;
@@ -70,5 +69,6 @@ window.addEventListener("load",async function() {
 }, false); 
 
 function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    var nrandom= Math.floor(ms[0]+Math.random()*(ms[1]-ms[0]));
+    return new Promise(resolve => setTimeout(resolve, nrandom));
 }

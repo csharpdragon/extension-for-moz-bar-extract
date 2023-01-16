@@ -1,0 +1,6 @@
+{
+	"before start new search": [2000,3000],
+	"between 10 keywords": [5000,6000],
+	"before scraping the result": [2000,4000],
+	"country-search-url": "http://google.com"
+}
