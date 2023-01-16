@@ -16,7 +16,7 @@ window.addEventListener("load",async function() {
                 }
             
         }
-        if(array.length>0){
+        if(!(iframes.length>0)){
             console.log(array);
             new Promise((resolve, reject) => {
                 try {
