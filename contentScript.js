@@ -1,7 +1,37 @@
 var array=[];
+var beforeNewSearch = 0;
+var before10keywords = 0;
+var beforescriping = 0;
+
+async function getTimeData(){
+    await (new Promise((resolve, reject) => {
+        try {
+          chrome.runtime.sendMessage({type: "timer"}, async (response) => {
+            console.log(response);
+            beforeNewSearch = response.beforeNewSearch;
+            before10keywords = response.before10keywords;
+            beforescriping = response.beforescriping;
+            console.log(beforeNewSearch);
+            console.log(before10keywords);
+            console.log(beforescriping);
+            resolve(response);
+          });
+        } catch (e) {
+          if (e.message == "Extension context invalidated.") {
+            console.log();
+          } else {
+            console.log(e);
+          }
+        }
+      }));
+}
+getTimeData();
 window.addEventListener("load",async function() {
+    console.log(beforeNewSearch);
+    console.log(before10keywords);
+    console.log(beforescriping);
     // loaded
-    await sleep(3000);
+    await sleep(beforescriping);
     var iframes=document.getElementsByTagName("iframe");
         for(var i=1;i<iframes.length;i++){
             
@@ -21,9 +51,9 @@ window.addEventListener("load",async function() {
             new Promise((resolve, reject) => {
                 try {
                   chrome.runtime.sendMessage({type: "receiveDAFromPage",data:array}, async (response) => {
-                    await sleep(1000);
+                    await sleep(beforeNewSearch);
                     if(response.wait){
-                        await sleep(5000);
+                        await sleep(before10keywords);
                     }
                     location.href=response.url;
                     resolve(response);
