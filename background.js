@@ -17,12 +17,8 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
     if(receivePDAFromPageArray.length<textArray.length)
     {
       receivePDAFromPageArray.push(request.data);
-      if(currentTabIndex%10==9)
-      {
-        await sleep(50000);
-      }
       currentTabIndex++;
-      sendResponse({url: 'http://google.com/search?q='+textArray[currentTabIndex]});
+      sendResponse({wait: currentTabIndex%10==9 ,url: 'http://google.com/search?q='+textArray[currentTabIndex]});
     }else{
       
     }

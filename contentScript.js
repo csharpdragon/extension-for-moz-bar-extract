@@ -16,12 +16,15 @@ window.addEventListener("load",async function() {
                 }
             
         }
-        if(!(iframes.length>0)){
+        if((iframes.length>0)){
             console.log(array);
             new Promise((resolve, reject) => {
                 try {
                   chrome.runtime.sendMessage({type: "receiveDAFromPage",data:array}, async (response) => {
                     await sleep(1000);
+                    if(response.wait){
+                        await sleep(5000);
+                    }
                     location.href=response.url;
                     resolve(response);
                   });
