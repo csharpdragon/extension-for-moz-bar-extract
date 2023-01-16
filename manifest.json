@@ -1,6 +1,6 @@
 {
-  "name": "Word Count and Read Out Loud",
-  "description": "Word Count and Read Out Loud!",
+  "name": "Search Result",
+  "description": "Search Result for Moz Bar extension!",
   "version": "1.0",
   "manifest_version": 3,
   "background": {

@@ -1,6 +1,7 @@
 var textArray=[];
 var receivePDAFromPageArray=[];
 var result=[];
+var currentTabIndex=0;
 chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse) {
   console.log(request.type);
   if(request.type=="start"){
@@ -16,6 +17,12 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
     if(receivePDAFromPageArray.length<textArray.length)
     {
       receivePDAFromPageArray.push(request.data);
+      if(currentTabIndex%10==9)
+      {
+        await sleep(50000);
+      }
+      currentTabIndex++;
+      sendResponse({url: 'http://google.com/search?q='+textArray[currentTabIndex]});
     }else{
       
     }
@@ -73,14 +80,15 @@ function getDifficulty(values) {
     return 'difficult';
   }
 }
-async function createTabs(){
-  for(var i=0;i<textArray.length;i++){
-    console.log(i);
+function createTabs(){
+  currentTabIndex=0;
+  // for(var i=0;i<textArray.length;i++){
+  //   console.log(i);
     chrome.tabs.create({
-      url: 'http://google.com/search?q='+textArray[i]
+      url: 'http://google.com/search?q='+textArray[0]
     });
-    await sleep(10000);
-  }
+  //   await sleep(10000);
+  // }
   chrome.storage.sync.set({ status:true });
 }
 
