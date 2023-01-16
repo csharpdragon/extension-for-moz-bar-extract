@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="popup.css">
+    <style>
+      body{
+        width: 210px;
+        height: 60px; 
+      }
+    </style>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <script src="juery.slim.min.js"></script>
+    <script src="popper.min.js"></script>
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="xlsx.full.min.js"></script>
+  </head>
+  <body>
+    <div class="m-2">
+      <div class="custom-file mb-3">
+        <input type="file" class="custom-file-input" id="customFile" name="filename">
+        <label class="custom-file-label" for="customFile">Choose file</label>
+      </div>
+    </div>
+    <div>
+      <button id="start" class="ml-1 mb-1 btn btn-primary">Start</button>
+      <button id="download" class="ml-1 mb-1 btn btn-primary">Download</button>
+    </div>
+  </body>
+  <script src="popup.js"></script>
+</html>
