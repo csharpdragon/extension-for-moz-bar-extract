@@ -39,45 +39,8 @@ function isNullorEmpty(ovalue){
     return false;
   return true;
 }
+
 chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse) {
-  console.log(request.type);
-  if(request.type=="start"){
-    console.log("start");
-    receivePDAFromPageArray=[];
-    text=request.text;
-    
-    setTimerAndUrl(request.timer);
-
-    textArray=text.split('\n');
-    textArray=textArray.map(x=>x.replace("\r",''));
-    console.log(textArray);
-    await createTabs();
-  }
-  if(request.type=="receiveDAFromPage"){
-    if(request.query==null || request.query == undefined || request.query=="")
-      return;
-    console.log(receivePDAFromPageArray);
-    console.log(textArray);
-    var index=0;
-    for(var i=0;i<textArray.length;i++){
-      if(textArray[i] == request.query){
-        index = i;
-      }
-    }
-    var wait=false;
-    if(receivePDAFromPageArray.length<textArray.length)
-    {
-      receivePDAFromPageArray.push(request.data);
-      sendResponse({wait: currentTabIndex%10==9 ,url: countryurl+textArray[index+1]});
-    }else{
-      
-    }
-    console.log(receivePDAFromPageArray);
-  }
-
-  if(request.type=="timer"){
-      sendResponse({beforeNewSearch,before10keywords,beforescriping});
-  }
   if(request.type=="download"){
     console.log(receivePDAFromPageArray);
     result=[];
@@ -99,6 +62,45 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
     }
     sendResponse(result);
   }
+  return true;
+});
+
+chrome.runtime.onMessage.addListener(async function(request, sender, sendResponse) {
+  console.log(request.type);
+  if(request.type=="start"){
+    console.log("start");
+    receivePDAFromPageArray=[];
+    text=request.text;
+    
+    setTimerAndUrl(request.timer);
+
+    textArray=text.split('\n');
+    textArray=textArray.map(x=>x.replace("\r",''));
+    console.log(textArray);
+    await createTabs();
+  }
+  if(request.type=="receiveDAFromPage"){
+    if(request.query==null || request.query == undefined || request.query=="")
+      return;
+    console.log(receivePDAFromPageArray);
+    console.log(textArray);
+
+    var wait=false;
+    if(receivePDAFromPageArray.length<textArray.length)
+    {
+      receivePDAFromPageArray.push(request.data);
+      if(receivePDAFromPageArray.length<textArray.length)
+        sendResponse({wait: currentTabIndex%10==9 ,url: countryurl+textArray[receivePDAFromPageArray.length]});
+    }else{
+      
+    }
+    console.log(receivePDAFromPageArray);
+  }
+
+  if(request.type=="timer"){
+      sendResponse({beforeNewSearch,before10keywords,beforescriping});
+  }
+  
   return true;
 });
 function sleep(ms) {

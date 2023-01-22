@@ -31,6 +31,9 @@ window.addEventListener("load",async function() {
     if(urlParams.has('q')){
         // loaded
         await sleep(beforescriping);
+        var chaptcha = document.getElementById('rc-anchor-alert');
+        if(chaptcha!=null)
+            return;
         var iframes=document.getElementsByTagName("iframe");
             for(var i=1;i<iframes.length;i++){
                 
