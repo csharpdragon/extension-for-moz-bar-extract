@@ -54,11 +54,21 @@ chrome.runtime.onMessage.addListener(async function(request, sender, sendRespons
     await createTabs();
   }
   if(request.type=="receiveDAFromPage"){
+    if(request.query==null || request.query == undefined || request.query=="")
+      return;
+    console.log(receivePDAFromPageArray);
+    console.log(textArray);
+    var index=0;
+    for(var i=0;i<textArray.length;i++){
+      if(textArray[i] == request.query){
+        index = i;
+      }
+    }
+    var wait=false;
     if(receivePDAFromPageArray.length<textArray.length)
     {
       receivePDAFromPageArray.push(request.data);
-      currentTabIndex++;
-      sendResponse({wait: currentTabIndex%10==9 ,url: countryurl+textArray[currentTabIndex]});
+      sendResponse({wait: currentTabIndex%10==9 ,url: countryurl+textArray[index+1]});
     }else{
       
     }
@@ -126,7 +136,7 @@ async function createTabs(){
   // for(var i=0;i<textArray.length;i++){
   //   console.log(i);
     chrome.tabs.create({
-      url: countryurl+'/search?q='+textArray[0]
+      url: countryurl+textArray[0]
     });
   //   await sleep(10000);
   // }
